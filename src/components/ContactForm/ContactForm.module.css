@@ -1,0 +1,63 @@
+.form {
+  margin: 0 auto 40px;
+  display: inline-flex;
+  flex-direction: column;
+  background-color: white;
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 10px 20px;
+  width: 260px;
+}
+
+.labelName,
+.labelNumber {
+  display: block;
+  margin: 0 auto 5px;
+  font-size: 16px;
+  color: gray;
+}
+
+.labelNumber {
+  margin-top: 10px;
+}
+
+.input {
+  display: block;
+  padding: 5px 10px;
+  margin: 0 auto 10px;
+  font-size: 16px;
+  color: gray;
+  background-color: lightgray;
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+
+.input::placeholder {
+  font-size: 12px;
+  color: gray;
+}
+
+.errorText {
+  color: red;
+  font-size: 12px;
+  text-align: center;
+}
+
+.buttonForm {
+  display: block;
+  margin: 10px auto 0;
+  cursor: pointer;
+  padding: 8px;
+  color: gray;
+  background-color: lightgray;
+  border: 1px solid gray;
+  border-radius: 4px;
+  transition: color 250ms linear, background-color 250ms linear,
+    border 250ms linear;
+}
+
+.buttonForm:hover {
+  color: white;
+  background-color: black;
+  border: none;
+}
