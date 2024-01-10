@@ -44,5 +44,5 @@ export const Header = () => {
             </header>
             <Outlet />
         </div>
-    )
-}
+    );
+};
