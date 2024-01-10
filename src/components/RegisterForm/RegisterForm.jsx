@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
-import { register } from "../../redux/operations";
-import { Formik, ErrorMessage, Field } from "formik";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { register } from "../../redux/auth/operations";
+import { Formik, ErrorMessage, Form, Field } from "formik";
 import * as yup from "yup";
 import styles from "./RegisterForm.module.css";
 
@@ -13,7 +14,7 @@ const initialValues = {
 let userSchema = yup.object({
     name: yup.string().required(),
     email: yup.string().email().required(),
-    password: yup.string().min(8).required(),
+    password: yup.string().min(6).required(),
 });
 
 export const RegisterForm = () => {
@@ -26,14 +27,18 @@ export const RegisterForm = () => {
             password: values.password,
         };
 
-        dispatch(register(valuesObject));
+        dispatch(register(valuesObject))
+            .then(unwrapResult)
+            .catch(errorText => {
+                alert(errorText);
+            });
 
         resetForm();
     };
 
     return (
         <Formik initialValues={initialValues} validationSchema={userSchema} onSubmit={handleOnSubmit}>
-            <form className={styles.registerForm}>
+            <Form className={styles.registerForm}>
                 <label htmlFor="name" className={styles.labelName}>Name</label>
                 <Field
                     type="name"
@@ -80,7 +85,7 @@ export const RegisterForm = () => {
                 </ErrorMessage>
 
                 <button type="submit" className={styles.bthRegisterForm}>Register</button>
-            </form>
+            </Form>
         </Formik>
     );
 };

@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { refreshUser } from "../redux/operations";
+import { refreshUser } from "../redux/auth/operations";
 import { Header } from "./Header/Header";
 import { Contacts } from "pages/Contacts";
 import { Login } from "pages/Login";

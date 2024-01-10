@@ -11,12 +11,13 @@ const setAuthHeader = (token = null) => {
     };
 };
 
-export const register = createAsyncThunk("auth/singup", async (credentials, thunkAPI) => {
+export const register = createAsyncThunk("auth/signup", async (credentials, thunkAPI) => {
     try {
-        const response = await axios.post("/users/singup", credentials);
+        const response = await axios.post("/users/signup", credentials);
         setAuthHeader(response.data.token);
         return response.data;
     } catch (error) {
+        console.error(error.response.data)
         return thunkAPI.rejectWithValue(error.message);
     };
 });
@@ -51,33 +52,6 @@ export const refreshUser = createAsyncThunk("auth/refresh", async (_, thunkAPI) 
     try {
         setAuthHeader(persistedToken);
         const response = await axios.get("/users/current");
-        return response.data;
-    } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
-    };
-});
-
-export const fetchContacts = createAsyncThunk("contacts/fetchAll", async (_, thunkAPI) => {
-    try {
-        const response = await axios.get("/contacts");
-        return response.data;
-    } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
-    };
-});
-
-export const addContact = createAsyncThunk("contacts/addContact", async (contact, thunkAPI) => {
-    try {
-        const response = await axios.post("/contacts", contact);
-        return response.data.contact;
-    } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
-    };
-});
-
-export const deleteContact = createAsyncThunk("contacts/deleteContact", async (taskId, thunkAPI) => {
-    try {
-        const response = await axios.delete(`/contacts/${taskId}`);
         return response.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message);

@@ -1,14 +1,11 @@
-.navigation {
-  display: flex;
-  gap: 10px;
-}
-
 .userContainer {
   display: flex;
   gap: 10px;
 }
 
 .userName {
+  display: block;
+  margin: auto 0;
   color: gray;
   font-size: 16px;
 }

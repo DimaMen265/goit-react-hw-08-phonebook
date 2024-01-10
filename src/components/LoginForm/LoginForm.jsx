@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
-import { logIn } from "../../redux/operations";
-import { Formik, ErrorMessage, Field } from "formik";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { logIn } from "../../redux/auth/operations";
+import { Formik, ErrorMessage, Form, Field } from "formik";
 import * as yup from "yup";
 import styles from "./LoginForm.module.css";
 
@@ -11,7 +12,7 @@ const initialValues = {
 
 let userSchema = yup.object({
     email: yup.string().email().required(),
-    password: yup.string().min(8).required(),
+    password: yup.string().min(6).required(),
 });
 
 export const LoginForm = () => {
@@ -23,14 +24,18 @@ export const LoginForm = () => {
             password: values.password,
         };
 
-        dispatch(logIn(valuesObject));
+        dispatch(logIn(valuesObject))
+            .then(unwrapResult)
+            .catch(errorText => {
+                alert(errorText);
+            });
 
         resetForm();
     };
 
     return (
         <Formik initialValues={initialValues} validationSchema={userSchema} onSubmit={handleOnSubmit}>
-            <form className={styles.loginForm}>
+            <Form className={styles.loginForm}>
                 <label htmlFor="email" className={styles.labelEmail}>Email</label>
                 <Field
                     type="email"
@@ -62,7 +67,7 @@ export const LoginForm = () => {
                 </ErrorMessage>
 
                 <button type="submit" className={styles.bthLoginForm}>Log in</button>
-            </form>
+            </Form>
         </Formik>
     );
 };

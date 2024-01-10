@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectContacts, selectFilter, selectIsLoading, selectError } from "../../redux/selectors";
-import { fetchContacts, deleteContact } from "../../redux/operations";
+import { selectContacts, selectFilter, selectIsLoading, selectError } from "../../redux/contacts/selectors";
+import { fetchContacts, deleteContact } from "../../redux/contacts/operations";
 import styles from "./ContactList.module.css";
 
 export const ContactList = () => {
@@ -23,16 +23,16 @@ export const ContactList = () => {
                 contacts.length > 0 ? (
                     <ul className={styles.listContact}>
                         {(filter.length > 0
-                            ? contacts.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
+                            ? contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
                             : contacts
-                        ).map(item => (
-                            <li key={item.id}>
+                        ).map(contact => (
+                            <li key={contact.id}>
                                 <div className={styles.wrapperItem}>
                                     <p className={styles.textItem}>
-                                        {item.name}: <a href={`tel:${item.number}`} className={styles.tel} >{item.number}</a> 
+                                        {contact.name}: <a href={`tel:${contact.number}`} className={styles.tel} >{contact.number}</a>
                                     </p>
                                     
-                                    <button onClick={() => dispatch(deleteContact(item.id))} className={styles.buttonDelete}>Delete</button>
+                                    <button onClick={() => dispatch(deleteContact(contact.id))} className={styles.buttonDelete}>Delete</button>
                                 </div>
                             </li>
                         ))}
