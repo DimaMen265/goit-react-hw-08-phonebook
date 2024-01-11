@@ -17,8 +17,7 @@ export const register = createAsyncThunk("auth/signup", async (credentials, thun
         setAuthHeader(response.data.token);
         return response.data;
     } catch (error) {
-        console.error(error.response.data)
-        return thunkAPI.rejectWithValue(error.message);
+        return thunkAPI.rejectWithValue("A user with this email already exists!");
     };
 });
 
@@ -28,7 +27,7 @@ export const logIn = createAsyncThunk("auth/login", async (credentials, thunkAPI
         setAuthHeader(response.data.token);
         return response.data;
     } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
+        return thunkAPI.rejectWithValue("Invalid email or password!");
     };
 });
 
