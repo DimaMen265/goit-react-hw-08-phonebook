@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectFilteredContacts, selectIsLoading, selectError } from "../../redux/contacts/selectors";
+import { selectContacts, selectFilter, selectIsLoading, selectError } from "../../redux/contacts/selectors";
 import { fetchContacts, deleteContact } from "../../redux/contacts/operations";
 import styles from "./ContactList.module.css";
 
 export const ContactList = () => {
     const dispatch = useDispatch();
-    const filteredContacts = useSelector(selectFilteredContacts);
+    const contacts = useSelector(selectContacts);
+    const filter = useSelector(selectFilter);
     const isLoading = useSelector(selectIsLoading);
     const error = useSelector(selectError);
 
@@ -19,9 +20,12 @@ export const ContactList = () => {
             {isLoading && !error && <p className={styles.textInfo}>Request in progress...</p>}
             {error && <p className={styles.textInfo}>Error: {error}</p>}
             {!isLoading && !error && (
-                filteredContacts.length > 0 ? (
+                contacts.length > 0 ? (
                     <ul className={styles.listContact}>
-                        {filteredContacts.map(contact => (
+                        {(filter.length > 0
+                            ? contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
+                            : contacts
+                        ).map(contact => (
                             <li key={contact.id}>
                                 <div className={styles.wrapperItem}>
                                     <p className={styles.textItem}>
